@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/home_parent"
+    android:background="@android:color/white"
+    tools:context=".Activities.ui.home.HomeFragment">
+
+    <Button
+        app:layout_constraintBottom_toBottomOf="@+id/home_parent"
+        android:layout_margin="@dimen/padding_loading_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/home_btn_add"
+        android:textColor="@android:color/white"
+        android:drawableLeft="@drawable/ic_plus"
+        android:padding="10dp"
+        android:text="@string/home_btn_add"
+        android:background="@drawable/style_btn"
+        tools:ignore="MissingConstraints" />
+
+    <RelativeLayout
+        android:id="@+id/home_part1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="@dimen/padding_loading_box"
+        app:layout_constraintHeight_percent="0.4"
+        app:layout_constraintStart_toStartOf="@+id/home_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </ImageView>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/home_device_label"
+        android:textSize="8sp"
+        android:padding="@dimen/padding_loading_box"
+        android:textColor="@color/gray_light"
+        app:layout_constraintTop_toBottomOf="@+id/home_part1"
+        android:text="@string/home_device_label"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"></TextView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/padding_loading_box"
+        app:layout_constraintBottom_toTopOf="@+id/home_btn_add"
+        app:layout_constraintTop_toBottomOf="@+id/home_device_label"
+        tools:ignore="MissingConstraints">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/home_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+
+        <RelativeLayout
+            android:id="@+id/home_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:src="@drawable/ic_empty"
+                android:layout_centerInParent="true"
+                android:layout_width="64dp"
+                android:id="@+id/home_empty_img"
+                android:layout_height="64dp"></ImageView>
+
+            <TextView
+                android:textColor="@color/gray_light"
+                android:textSize="8sp"
+                android:text="@string/empty"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/home_empty_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></TextView>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

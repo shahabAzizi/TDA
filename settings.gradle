@@ -1,0 +1,10 @@
+include ':app'
+rootProject.name='TDA'
+dependencyResolutionManagement{
+    repositories{
+        google()
+
+        maven { url "https://jitpack.io" }
+        jcenter()
+    }
+}

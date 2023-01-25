@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:padding="@dimen/padding_loading_box"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:paddingRight="0dp"
+            android:paddingLeft="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:contentInsetLeft="0dp"
+            android:contentInsetStart="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            android:contentInsetRight="0dp"
+            android:contentInsetEnd="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetEnd="0dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_menu_bar"
+                    android:id="@+id/toolbar_drawer_btn"
+                    android:background="@drawable/style_toolbar_btn"
+                    android:layout_width="48sp"
+                    android:layout_height="48sp"></ImageButton>
+
+                <ImageButton
+                    android:layout_alignParentLeft="true"
+                    android:src="@drawable/author"
+                    android:tintMode="src_in"
+                    android:scaleType="fitCenter"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/toolbar_overflow_btn"
+                    android:background="@drawable/style_toolbar_btn"
+                    android:layout_width="32sp"
+                    android:layout_height="32sp"></ImageButton>
+
+
+                <TextView
+                    android:text="@string/home_toolbar_text"
+                    android:layout_centerVertical="true"
+                    android:textSize="12sp"
+                    android:layout_marginRight="12dp"
+                    android:layout_toLeftOf="@+id/toolbar_drawer_btn"
+                    android:layout_toRightOf="@+id/toolbar_overflow_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></TextView>
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <include layout="@layout/content_home" />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

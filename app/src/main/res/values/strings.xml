@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">TDA</string>
+    <string name="new_user">کاربر جدید</string>
+    <string name="delete_user">حذف کاربر</string>
+    <string name="reset_user">ریست دستگاه</string>
+    <string name="change_admin">تغییر مدیر</string>
+    <string name="device_name">Device Name:</string>
+    <string name="Loading_title">منتظر باشید...</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">همراه من</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="home_toolbar_text">همراه من</string>
+    <string name="home_btn_add">افزودن دستگاه</string>
+    <string name="empty">هیچ موردی یافت نشد</string>
+    <string name="home_device_label">لیست دستگاه ها</string>
+    <string name="menu_login">ورود / ثبت نام</string>
+    <string name="menu_create_backup">تهیه نسخه پشتیبان</string>
+    <string name="menu_restore">بازگردانی نسخه پشتیبان</string>
+    <string name="menu_products">سایر محصولات</string>
+    <string name="menu_support">پشیتبانی محصول</string>
+    <string name="adddevice_toolbar_text">افزودن دستگاه</string>
+    <string name="bluetooth_status_label">وضعیت بلوتوث:</string>
+    <string name="bluetooth_status_enable">روشن</string>
+    <string name="bluetooth_name_label">نام بلوتوث:</string>
+    <string name="nullvalue_string">---</string>
+    <string name="adddevice_device_list_label">لیست بلوتوث</string>
+    <string name="adddevice_device_name_hint">نام دستگاه را وارد کنید</string>
+    <string name="device_toolbar_text">جزییات دستگاه</string>
+    <string name="device_btn_add">افزودن کاربر</string>
+    <string name="device_btn_connection">اتصال به دستگاه</string>
+    <string name="device_device_list_label">لیست کاربران</string>
+    <string name="bluetooth_device_label">:نام دستگاه</string>
+    <string name="connection_fail">اتصال به دستگاه</string>
+    <string name="connection_success">قطع اتصال</string>
+    <string name="adddevice_device_password_hint">لطفا رمز عبور را وارد کنید</string>
+</resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_login"
+            android:title="@string/menu_login" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_backup"
+            android:title="@string/menu_create_backup" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_restore_b"
+            android:title="@string/menu_restore" />
+        <item
+            android:id="@+id/nav_products"
+            android:icon="@drawable/ic_products"
+            android:title="@string/menu_products" />
+        <item
+            android:id="@+id/nav_support"
+            android:icon="@drawable/ic_support"
+            android:title="@string/menu_support" />
+
+    </group>
+</menu>
