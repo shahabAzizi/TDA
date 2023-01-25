@@ -38,7 +38,7 @@ public class HomeActivity extends MyBaseActivity {
 //    private AppBarConfiguration mAppBarConfiguration;
 //    private ActivityHomeBinding binding;
 //    private Toolbar toolbar;
-//
+// hjbjhbjkb
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
