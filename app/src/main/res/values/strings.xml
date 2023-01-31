@@ -35,10 +35,20 @@
     <string name="adddevice_device_name_hint">نام دستگاه را وارد کنید</string>
     <string name="device_toolbar_text">جزییات دستگاه</string>
     <string name="device_btn_add">افزودن کاربر</string>
-    <string name="device_btn_connection">اتصال به دستگاه</string>
+    <string name="device_btn_connection_fail">اتصال به دستگاه</string>
+    <string name="device_btn_connection_success">قطع اتصال</string>
     <string name="device_device_list_label">لیست کاربران</string>
-    <string name="bluetooth_device_label">:نام دستگاه</string>
-    <string name="connection_fail">اتصال به دستگاه</string>
-    <string name="connection_success">قطع اتصال</string>
+    <string name="bluetooth_device_label">نام دستگاه:</string>
+    <string name="connection_fail">عدم اتصال</string>
+    <string name="connection_success">متصل شد</string>
     <string name="adddevice_device_password_hint">لطفا رمز عبور را وارد کنید</string>
+    <string name="adddevice_toolbar_title">افزودن دستگاه</string>
+    <string name="home_toolbar_title">همراه من</string>
+    <string name="bluetooth_ip_label">آدرس:</string>
+    <string name="btn_add">افزودن</string>
+    <string name="add_device_dialog_tag">add_device_dialog_tag</string>
+    <string name="device_toolbar_title">جزییات دستگاه</string>
+    <string name="device_name_label">نام دستگاه:</string>
+    <string name="connection_progress">درحال اتصال</string>
+    <string name="adddevice_device_list_loading">درحال دریافت...</string>
 </resources>

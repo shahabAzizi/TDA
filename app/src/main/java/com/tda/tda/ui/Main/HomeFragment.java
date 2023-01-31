@@ -1,6 +1,5 @@
-package com.tda.tda.ui.Main;
+package com.tda.tda.ui.main;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -8,20 +7,21 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.tda.tda.HomeActivity;
 import com.tda.tda.R;
 import com.tda.tda.databinding.HomeFragmentBinding;
 import com.tda.tda.model.adapters.DeviceAdapter;
-import com.tda.tda.model.dataclass.Devices;
-import com.tda.tda.ui.Splash.SplashViewModelMy;
-
-import java.util.List;
+import com.tda.tda.ui.device.DeviceFragment;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -38,13 +38,37 @@ public class HomeFragment extends Fragment {
         binding=HomeFragmentBinding.inflate(inflater,container,false);
         mViewModel=new ViewModelProvider(this).get(HomeViewModel.class);
 
+        initToolbar();
+        initButtonAdd();
+        initDeviceList();
+        initNavigation();
+
+        new Thread(() -> {
+            mViewModel.getDevices();
+        }).start();
+
+        return binding.getRoot();
+    }
+
+    private void initToolbar(){
+        ((HomeActivity)getActivity()).setSupportActionBar(binding.homeToolbar);
+//        ((HomeActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        ((HomeActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        binding.homeToolbar.setNavigationOnClickListener(view -> {
+            binding.homeFragment.open();
+        });
+    }
+
+    private void initButtonAdd(){
         binding.homeBtnAdd.setOnClickListener(view->{
             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_homeFragment_to_adddeviceFragment);
         });
+    }
 
+    private void initDeviceList(){
         adapter=new DeviceAdapter();
         adapter.itemClickListener= device -> {
-            //Do Nothing Now
+             Navigation.findNavController(binding.getRoot()).navigate(HomeFragmentDirections.actionNavFragmentHomeToNavFragmentDevice(device.getId(), device.getName(),device.getIp()));
         };
 
         binding.homeList.setAdapter(adapter);
@@ -58,14 +82,16 @@ public class HomeFragment extends Fragment {
                 binding.homeEmpty.setVisibility(View.VISIBLE);
             }
         });
-
-        new Thread(() -> {
-            mViewModel.getDevices();
-        }).start();
-
-        return binding.getRoot();
     }
 
+    private void initNavigation(){
+        binding.navView.setNavigationItemSelectedListener(item -> {
+//                if(item.getItemId()==R.id.nav_slideshow){
+//            Toast.makeText(HomeActivity.this, "Yes", Toast.LENGTH_SHORT).show();
+//                }
+            return false;
+        });
+    }
 
 
 }

@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.tda.tda.Activities.AdddeviceActivity;
 import com.tda.tda.Activities.DeviceActivity;
-import com.tda.tda.DB.DB;
-import com.tda.tda.DB.Models.Device;
+import com.tda.tda.helpers.DB.DB;
+import com.tda.tda.helpers.DB.Models.Device;
 import com.tda.tda.R;
 import com.tda.tda.model.adapters.DeviceAdapter;
 import com.tda.tda.model.dataclass.Devices;

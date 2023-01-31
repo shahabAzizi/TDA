@@ -1,16 +1,5 @@
 package com.tda.tda.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-
-import com.tda.tda.MyBaseActivity;
-import com.tda.tda.R;
-
-import com.tda.tda.UiAssets.Loading;
-
 public class SplashActivity  {
 //
 //    Loading loading;

@@ -1,4 +1,4 @@
-package com.tda.tda.DB.Tables;
+package com.tda.tda.helpers.DB.Tables;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -6,7 +6,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import com.tda.tda.DB.Models.Device;
+import com.tda.tda.helpers.DB.Models.Device;
 
 @Dao
 public interface TBDevice {

@@ -1,4 +1,4 @@
-package com.tda.tda.UiAssets;
+package com.tda.tda.model.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;

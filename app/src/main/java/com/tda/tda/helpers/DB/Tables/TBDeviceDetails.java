@@ -1,11 +1,10 @@
-package com.tda.tda.DB.Tables;
+package com.tda.tda.helpers.DB.Tables;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.tda.tda.DB.Models.Device;
-import com.tda.tda.DB.Models.DeviceDetails;
+import com.tda.tda.helpers.DB.Models.DeviceDetails;
 
 import java.util.List;
 

@@ -1,5 +1,7 @@
 package com.tda.tda;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -15,6 +17,7 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
@@ -24,25 +27,48 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 //import com.tda.tda.Activities.databinding.ActivityHomeBinding;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.tda.tda.MyBaseActivity;
 import com.tda.tda.R;
 import com.tda.tda.databinding.ActivityHomeBinding;
+import com.tda.tda.model.dialogs.ShowMessage;
+
+import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import dagger.hilt.android.qualifiers.ApplicationContext;
 
 @AndroidEntryPoint
 public class HomeActivity extends MyBaseActivity {
 
-
+    private HomeActivityViewModelMy homeActivityViewModelMy;
 
 //    private AppBarConfiguration mAppBarConfiguration;
-//    private ActivityHomeBinding binding;
+    private ActivityHomeBinding binding;
+    public ShowMessage showMessage;
 //    private Toolbar toolbar;
-// hjbjhbjkb
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        binding = ActivityHomeBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        showMessage=new ShowMessage(this);
+        homeActivityViewModelMy= new ViewModelProvider(this).get(HomeActivityViewModelMy.class);
+//        mAppBarConfiguration = new AppBarConfiguration.Builder(
+//                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+//                .setOpenableLayout(drawer)
+//                .build();
+
+
+        checkPermission(getApplication());
+
     }
 //        getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 //        binding = ActivityHomeBinding.inflate(getLayoutInflater());
@@ -117,4 +143,26 @@ public class HomeActivity extends MyBaseActivity {
 //        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
 //                || super.onSupportNavigateUp();
 //    }
+
+    public void checkPermission(Context context){
+        Dexter.withContext(context)
+                .withPermissions(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
+                        if(multiplePermissionsReport.areAllPermissionsGranted()){
+                            homeActivityViewModelMy.getHasBluetoothPermission().postValue(true);
+                        }else{
+                            homeActivityViewModelMy.getHasBluetoothPermission().postValue(false);
+                            showMessage.showMessageAlert("بدون اجازه دسترسی به بلوتوث امکان استفاده از برنامه وجود ندارد",ShowMessage.ALERT_ERROR);
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
+                    }
+                }).check();
+    }
+
 }

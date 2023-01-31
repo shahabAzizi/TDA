@@ -1,4 +1,4 @@
-package com.tda.tda.DB.Models;
+package com.tda.tda.helpers.DB.Models;
 
 
 import androidx.room.ColumnInfo;

@@ -1,18 +1,14 @@
 package com.tda.tda.data.repositories.impl;
 
-import android.content.Context;
-
-import com.tda.tda.DB.DB;
-import com.tda.tda.DB.Models.Device;
+import com.tda.tda.helpers.DB.DB;
+import com.tda.tda.helpers.DB.Models.Device;
+import com.tda.tda.helpers.DB.Models.DeviceDetails;
 import com.tda.tda.model.dataclass.Devices;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
-
-import dagger.hilt.android.qualifiers.ApplicationContext;
-import kotlinx.coroutines.MainCoroutineDispatcher;
 
 public class DevicesRepository {
 
@@ -39,6 +35,32 @@ public class DevicesRepository {
     public Device getDeviceByNameOrIp(String name,String ip) {
         Device myDevice=db.tbDevice().getByNameOrAddress(name,ip);
         return  myDevice;
+    }
+
+    public Boolean saveNewDevice(String name,String password,String ip,String bluetoothName){
+        boolean result=false;
+        try {
+            Device hasDevice=getDeviceByNameOrIp(name,ip);
+            if(hasDevice==null){
+                Device newDevice=new Device();
+                newDevice.device_name=name;
+                newDevice.device_bluetooth=bluetoothName;
+                newDevice.device_ip=ip;
+                newDevice.password=password;
+                db.tbDevice().insert(newDevice);
+                result=true;
+            }
+        }catch (Exception e){}
+        return result;
+    }
+
+    public List<DeviceDetails> getDeviceUsers(int device_id){
+        List<DeviceDetails> result=new ArrayList<>();
+        try {
+            result=db.tbDeviceDetails().getAllByDevice(device_id);
+
+        }catch (Exception e){}
+        return result;
     }
 
 }

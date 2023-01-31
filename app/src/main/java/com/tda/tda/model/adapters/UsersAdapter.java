@@ -12,12 +12,13 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tda.tda.R;
+import com.tda.tda.helpers.DB.Models.DeviceDetails;
 import com.tda.tda.model.dataclass.Devices;
 
-public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.myViewHolder> {
+public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.myViewHolder> {
 
-    public AsyncListDiffer<Devices> differ = new AsyncListDiffer<Devices>(this,new DeviceDiffer());
-    public Devices SelectedDevice=new Devices();
+    public AsyncListDiffer<DeviceDetails> differ = new AsyncListDiffer<DeviceDetails>(this,new DeviceDiffer());
+    public DeviceDetails SelectedDevice=new DeviceDetails();
     public ItemClickListener itemClickListener;
 
     @NonNull
@@ -31,10 +32,10 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.myViewHold
 
     @Override
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
-        final Devices myListData = differ.getCurrentList().get(position);
-        holder.txtName.setText(myListData.getName());
-        holder.txtIp.setText(myListData.getIp());
-        if(myListData.getName().equals(SelectedDevice.getName()) && myListData.getIp().equals(SelectedDevice.getIp())){
+        final DeviceDetails myListData = differ.getCurrentList().get(position);
+        holder.txtName.setText(myListData.name);
+        holder.txtIp.setText(myListData.type);
+        if(myListData.name.equals(SelectedDevice.name) && myListData.id==SelectedDevice.id){
             holder.imgTick.setVisibility(View.VISIBLE);
         }else{
             holder.imgTick.setVisibility(View.GONE);
@@ -51,17 +52,17 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.myViewHold
     }
 
 
-    class DeviceDiffer extends DiffUtil.ItemCallback<Devices> {
+    class DeviceDiffer extends DiffUtil.ItemCallback<DeviceDetails> {
 
 
         @Override
-        public boolean areItemsTheSame(@NonNull Devices oldItem, @NonNull Devices newItem) {
+        public boolean areItemsTheSame(@NonNull DeviceDetails oldItem, @NonNull DeviceDetails newItem) {
             return oldItem == newItem;
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull Devices oldItem, @NonNull Devices newItem) {
-            return oldItem.getName().equals(newItem.getName());
+        public boolean areContentsTheSame(@NonNull DeviceDetails oldItem, @NonNull DeviceDetails newItem) {
+            return oldItem.id==newItem.id;
         }
     }
 
@@ -79,6 +80,6 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.myViewHold
     }
 
     public interface ItemClickListener{
-        public void onItemClickListener(Devices device);
+        public void onItemClickListener(DeviceDetails device);
     }
 }

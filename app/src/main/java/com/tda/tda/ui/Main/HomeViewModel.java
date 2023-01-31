@@ -1,12 +1,8 @@
-package com.tda.tda.ui.Main;
-
-import android.content.Context;
+package com.tda.tda.ui.main;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.tda.tda.DB.Models.Device;
 import com.tda.tda.MyBaseViewModel;
 import com.tda.tda.data.repositories.impl.DevicesRepository;
 import com.tda.tda.model.dataclass.Devices;
@@ -16,7 +12,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
-import kotlinx.coroutines.Dispatchers;
 
 @HiltViewModel
 public class HomeViewModel extends MyBaseViewModel {

@@ -18,7 +18,7 @@
         android:drawableLeft="@drawable/ic_plus"
         android:padding="10dp"
         android:text="@string/home_btn_add"
-        android:background="@drawable/style_btn"
+        android:background="@drawable/style_btn_connection_fail"
         tools:ignore="MissingConstraints" />
 
     <RelativeLayout

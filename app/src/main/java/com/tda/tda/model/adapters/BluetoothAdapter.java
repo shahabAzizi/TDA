@@ -17,14 +17,15 @@ import com.tda.tda.model.dataclass.BluetoothDevice;
 
 public class BluetoothAdapter extends RecyclerView.Adapter<BluetoothAdapter.myViewHolder> {
 
-    public AsyncListDiffer<BluetoothDevice> differ = new AsyncListDiffer<BluetoothDevice>(this,new BluetoothDiffer());
-    public BluetoothDevice SelectedDevice=new BluetoothDevice();
+    public AsyncListDiffer<BluetoothDevice> differ = new AsyncListDiffer<BluetoothDevice>(this, new BluetoothDiffer());
+    public BluetoothDevice SelectedDevice = new BluetoothDevice();
+    private int selectedPosition = -1;
 
     @NonNull
     @Override
     public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View listItem= layoutInflater.inflate(R.layout.layout_bluetooth_record, parent, false);
+        View listItem = layoutInflater.inflate(R.layout.layout_bluetooth_record, parent, false);
         myViewHolder viewHolder = new myViewHolder(listItem);
         return viewHolder;
     }
@@ -34,17 +35,17 @@ public class BluetoothAdapter extends RecyclerView.Adapter<BluetoothAdapter.myVi
         final BluetoothDevice myListData = differ.getCurrentList().get(position);
         holder.txtName.setText(myListData.getName());
         holder.txtIp.setText(myListData.getIp());
-        if(myListData.equals(SelectedDevice)){
+        if (selectedPosition == position) {
             holder.imgTick.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             holder.imgTick.setVisibility(View.GONE);
         }
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SelectedDevice=differ.getCurrentList().get(position);
-                BluetoothAdapter.this.notifyItemChanged(position);
-            }
+        holder.itemView.setOnClickListener(view -> {
+            SelectedDevice = differ.getCurrentList().get(position);
+            int lastItem = selectedPosition;
+            if (lastItem != -1) notifyItemChanged(lastItem);
+            selectedPosition = position;
+            notifyItemChanged(selectedPosition);
         });
     }
 
@@ -65,13 +66,14 @@ public class BluetoothAdapter extends RecyclerView.Adapter<BluetoothAdapter.myVi
 
         @Override
         public boolean areContentsTheSame(@NonNull BluetoothDevice oldItem, @NonNull BluetoothDevice newItem) {
-            return oldItem.getName().equals(newItem.getName());
+            return oldItem.getName().equals(newItem.getName()) && oldItem.getIp().equals(newItem.getIp());
         }
     }
 
     public class myViewHolder extends RecyclerView.ViewHolder {
-        public TextView txtName,txtIp,txtType;
+        public TextView txtName, txtIp, txtType;
         public ImageView imgTick;
+
         public myViewHolder(View itemView) {
             super(itemView);
             this.txtName = (TextView) itemView.findViewById(R.id.bluetooth_record_layout_name);

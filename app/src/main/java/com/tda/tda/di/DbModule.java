@@ -2,7 +2,8 @@ package com.tda.tda.di;
 
 import android.content.Context;
 
-import com.tda.tda.DB.DB;
+import com.tda.tda.helpers.BluetoothHelper;
+import com.tda.tda.helpers.DB.DB;
 
 import javax.inject.Singleton;
 
@@ -21,5 +22,6 @@ final class DbModule {
     public static DB provideDB(@ApplicationContext Context context){
         return DB.getInstance(context);
     }
+
 
 }

@@ -1,4 +1,4 @@
-package com.tda.tda.ui.Splash;
+package com.tda.tda.ui.splash;
 
 import androidx.lifecycle.ViewModelProvider;
 

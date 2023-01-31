@@ -1,4 +1,4 @@
-package com.tda.tda.DB;
+package com.tda.tda.helpers.DB;
 
 import android.content.Context;
 
@@ -6,9 +6,10 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.tda.tda.DB.Models.Device;
-import com.tda.tda.DB.Models.DeviceDetails;
-import com.tda.tda.DB.Tables.TBDevice;
+import com.tda.tda.helpers.DB.Models.Device;
+import com.tda.tda.helpers.DB.Models.DeviceDetails;
+import com.tda.tda.helpers.DB.Tables.TBDevice;
+import com.tda.tda.helpers.DB.Tables.TBDeviceDetails;
 
 @Database(entities = {Device.class, DeviceDetails.class}, version = 3)
 public abstract class DB extends RoomDatabase {
@@ -40,5 +41,6 @@ public abstract class DB extends RoomDatabase {
     }
 
     public abstract TBDevice tbDevice();
+    public abstract TBDeviceDetails tbDeviceDetails();
 
 }

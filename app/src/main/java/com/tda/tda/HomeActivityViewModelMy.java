@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class HomeActivityViewModelMy extends MyBaseViewModel {
 
     @Inject
-    public HomeActivityViewModelMy(){}
+    public HomeActivityViewModelMy(){
+    }
 
 }

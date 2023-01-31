@@ -2,6 +2,7 @@ plugins {
     // other plugins...
     id 'com.android.application'
     id 'com.google.dagger.hilt.android'
+    id 'androidx.navigation.safeargs'
 }
 android {
     compileSdkVersion 31

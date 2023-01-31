@@ -6,32 +6,52 @@
     android:id="@+id/nav_graph.xml">
 
     <fragment
-        android:name="com.tda.tda.ui.Splash.SplashFragment"
+        android:name="com.tda.tda.ui.splash.SplashFragment"
         tools:layout="@layout/splash_fragment"
         android:id="@+id/nav_fragment_splash">
         <action
             android:id="@+id/action_splashFragment_to_homeFragment"
             app:destination="@id/nav_fragment_home"
+            app:launchSingleTop="true"
             app:popUpTo="@id/nav_fragment_splash"
             app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
-        android:name="com.tda.tda.ui.Main.HomeFragment"
+        android:name="com.tda.tda.ui.main.HomeFragment"
         tools:layout="@layout/home_fragment"
         android:id="@+id/nav_fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_adddeviceFragment"
             app:destination="@id/nav_fragment_adddevice"
-            app:popUpTo="@id/nav_fragment_home"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_nav_fragment_home_to_nav_fragment_device"
+            app:popUpToInclusive="false"
+            app:destination="@id/nav_fragment_device" />
+
     </fragment>
 
     <fragment
-        android:name="com.tda.tda.ui.AddDevice.AddDeviceFragment"
+        android:name="com.tda.tda.ui.adddevice.AddDeviceFragment"
         tools:layout="@layout/add_device_fragment"
         android:id="@+id/nav_fragment_adddevice"
+        app:popUpToInclusive="true"/>
+
+    <fragment
+        android:name="com.tda.tda.ui.device.DeviceFragment"
+        tools:layout="@layout/device_fragment"
+        android:id="@+id/nav_fragment_device"
         app:popUpToInclusive="true">
+        <argument
+            android:name="device_id"
+            app:argType="integer" />
+        <argument
+            android:name="device_name"
+            app:argType="string" />
+        <argument
+            android:name="device_ip"
+            app:argType="string" />
     </fragment>
 
 </navigation>
