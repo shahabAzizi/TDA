@@ -1,6 +1,7 @@
 package com.tda.tda.helpers.DB.Tables;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -17,8 +18,20 @@ public interface TBDeviceDetails {
     @Insert
     long insert(DeviceDetails users);
 //
-//    @Delete
-//    void delete(Task task);
+    @Query("DELETE FROM devicedetails where device_id=:id")
+    int delete(int id);
+
+    @Query("DELETE FROM devicedetails where id=:id")
+    int deleteUser(int id);
+
+    @Query("DELETE FROM devicedetails where 1")
+    int deleteAll();
+
+    @Query("DELETE FROM devicedetails where device_id=:id")
+    int resetDevice(int id);
+
+    @Query("SELECT * FROM devicedetails where device_id=:device_id and fp_user_id=:fp")
+    DeviceDetails getUserByFP(int device_id,String fp);
 //
 //    @Update
 //    void update(Task task);

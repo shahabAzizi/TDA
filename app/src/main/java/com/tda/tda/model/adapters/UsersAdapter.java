@@ -1,31 +1,36 @@
 package com.tda.tda.model.adapters;
 
+import android.app.Activity;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.AsyncListDiffer;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.tda.tda.HomeActivity;
 import com.tda.tda.R;
 import com.tda.tda.helpers.DB.Models.DeviceDetails;
 import com.tda.tda.model.dataclass.Devices;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.myViewHolder> {
-
     public AsyncListDiffer<DeviceDetails> differ = new AsyncListDiffer<DeviceDetails>(this,new DeviceDiffer());
-    public DeviceDetails SelectedDevice=new DeviceDetails();
-    public ItemClickListener itemClickListener;
-
+    private MenuClickListener listener;
     @NonNull
     @Override
     public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View listItem= layoutInflater.inflate(R.layout.layout_device_record, parent, false);
+        View listItem= layoutInflater.inflate(R.layout.layout_user_record, parent, false);
         myViewHolder viewHolder = new myViewHolder(listItem);
         return viewHolder;
     }
@@ -35,13 +40,14 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.myViewHolder
         final DeviceDetails myListData = differ.getCurrentList().get(position);
         holder.txtName.setText(myListData.name);
         holder.txtIp.setText(myListData.type);
-        if(myListData.name.equals(SelectedDevice.name) && myListData.id==SelectedDevice.id){
-            holder.imgTick.setVisibility(View.VISIBLE);
-        }else{
-            holder.imgTick.setVisibility(View.GONE);
-        }
-        holder.itemView.setOnClickListener(view -> {
-            if(itemClickListener!=null)itemClickListener.onItemClickListener(myListData);
+        holder.btnMenu.setOnClickListener(view -> {
+            PopupMenu popupMenu = new PopupMenu(view.getContext(),view);
+            popupMenu.getMenuInflater().inflate(R.menu.user, popupMenu.getMenu());
+            popupMenu.show();
+            popupMenu.setOnMenuItemClickListener(item -> {
+                if(listener!=null)listener.onMenuItemClicked(item.getItemId(),differ.getCurrentList().get(position));
+                return false;
+            });
         });
     }
 
@@ -49,6 +55,10 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.myViewHolder
     @Override
     public int getItemCount() {
         return differ.getCurrentList().size();
+    }
+
+    public void setListener(MenuClickListener listener) {
+        this.listener = listener;
     }
 
 
@@ -66,20 +76,21 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.myViewHolder
         }
     }
 
-    public class myViewHolder extends RecyclerView.ViewHolder {
-        public TextView txtName,txtIp,txtType;
-        public ImageView imgTick;
+    public class myViewHolder extends RecyclerView.ViewHolder{
+        public TextView txtName,txtIp;
+        public ImageButton btnMenu;
         public myViewHolder(View itemView) {
             super(itemView);
-            this.txtName = (TextView) itemView.findViewById(R.id.device_record_layout_name);
-            this.txtIp = (TextView) itemView.findViewById(R.id.device_record_layout_ip);
-            this.txtType = (TextView) itemView.findViewById(R.id.device_record_layout_type);
-            this.imgTick = (ImageView) itemView.findViewById(R.id.device_record_layout_tick);
+            this.txtName = (TextView) itemView.findViewById(R.id.user_record_layout_name);
+            this.txtIp = (TextView) itemView.findViewById(R.id.user_record_layout_ip);
+            this.btnMenu = (ImageButton) itemView.findViewById(R.id.user_record_layout_menu);
         }
 
     }
 
-    public interface ItemClickListener{
-        public void onItemClickListener(DeviceDetails device);
+    public interface MenuClickListener{
+        public void onMenuItemClicked(int item,DeviceDetails object);
     }
+
+
 }

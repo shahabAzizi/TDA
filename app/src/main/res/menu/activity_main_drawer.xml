@@ -9,11 +9,11 @@
             android:icon="@drawable/ic_login"
             android:title="@string/menu_login" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_create_backup"
             android:icon="@drawable/ic_backup"
             android:title="@string/menu_create_backup" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_restore_backup"
             android:icon="@drawable/ic_restore_b"
             android:title="@string/menu_restore" />
         <item

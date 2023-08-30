@@ -22,6 +22,14 @@ public interface TBDevice {
 
     @Insert
     long insert(Device device);
+
+    @Query("DELETE FROM device where id=:id")
+    int delete(int id);
+
+
+    @Query("DELETE FROM device where 1")
+    int deleteAll();
+
 //
 //    @Delete
 //    void delete(Task task);

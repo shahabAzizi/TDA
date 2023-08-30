@@ -51,4 +51,24 @@
     <string name="device_name_label">نام دستگاه:</string>
     <string name="connection_progress">درحال اتصال</string>
     <string name="adddevice_device_list_loading">درحال دریافت...</string>
+    <string name="action_delete">حذف دستگاه</string>
+    <string name="action_get_users_from_device">گرفتن اثر انگشت کاربر</string>
+    <string name="user_btn_add">ثبت کاربر</string>
+    <string name="new_user_step_one">تایید اثر انگشت مدیر</string>
+    <string name="new_user_step_two">تایید اثرانگشت جدید</string>
+    <string name="new_user_name_holder">نام کاربر جدید را وارد کنید</string>
+    <string name="user_type_label">نوع کاربری:</string>
+    <string name="user_name_label">نام کاربر:</string>
+    <string name="menu_user_delete">حذف کاربر</string>
+    <string name="action_user_delete">حذف کاربر</string>
+    <string name="new_user_step_zero">درحال ارسال دستور</string>
+    <string name="get_user_by_fp_step_two">دریافت اثرانگشت کاربر</string>
+    <string name="action_reset_device">ریست دستگاه</string>
+    <string name="action_user_admin">تغییر به مدیر</string>
+    <string name="login_mobile_hint">شماره موبایل</string>
+    <string name="login_desc">جهت ورود به برنامه لطفا شماره موبایل خود را در باکس زیر وارد کنید</string>
+    <string name="activation_desc">کد ارسالی از طریق پیامک را وارد کنید</string>
+    <string name="activation_code_hint">کدفعالسازی</string>
+    <string name="activation_btn_add">فعالسازی</string>
+    <string name="login_btn_add">ورود به برنامه</string>
 </resources>

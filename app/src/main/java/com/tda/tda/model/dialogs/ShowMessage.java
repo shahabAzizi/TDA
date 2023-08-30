@@ -1,11 +1,13 @@
 package com.tda.tda.model.dialogs;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.os.Handler;
+import android.view.KeyEvent;
 
 import com.andreseko.SweetAlert.SweetAlertDialog;
-
-import java.util.logging.Handler;
+import com.tda.tda.model.listeners.ConfirmListener;
 
 import javax.inject.Inject;
 
@@ -31,6 +33,15 @@ public class ShowMessage {
                     .setTitleText(text)
                     .show();
         }
+    }
+
+    public void showConfirm(String text, ConfirmListener callback){
+        new SweetAlertDialog(context)
+                .setTitleText(text)
+                .setCancelButton("خیر", Dialog::dismiss)
+                .setConfirmButton("بله",sweetAlertDialog -> {
+                callback.onConfirmed(sweetAlertDialog);
+        }).show();
     }
 
 

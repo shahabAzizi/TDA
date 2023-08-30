@@ -2,8 +2,16 @@ package com.tda.tda;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
@@ -16,6 +24,8 @@ import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -30,13 +40,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.DexterError;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.karumi.dexter.listener.single.PermissionListener;
 import com.tda.tda.MyBaseActivity;
 import com.tda.tda.R;
 import com.tda.tda.databinding.ActivityHomeBinding;
 import com.tda.tda.model.dialogs.ShowMessage;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -47,10 +64,10 @@ public class HomeActivity extends MyBaseActivity {
 
     private HomeActivityViewModelMy homeActivityViewModelMy;
 
-//    private AppBarConfiguration mAppBarConfiguration;
+    //    private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomeBinding binding;
     public ShowMessage showMessage;
-//    private Toolbar toolbar;
+    public int toolbarMenu = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,15 +76,15 @@ public class HomeActivity extends MyBaseActivity {
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        showMessage=new ShowMessage(this);
-        homeActivityViewModelMy= new ViewModelProvider(this).get(HomeActivityViewModelMy.class);
+
+        showMessage = new ShowMessage(this);
+        homeActivityViewModelMy = new ViewModelProvider(this).get(HomeActivityViewModelMy.class);
 //        mAppBarConfiguration = new AppBarConfiguration.Builder(
 //                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
 //                .setOpenableLayout(drawer)
 //                .build();
 
 
-        checkPermission(getApplication());
 
     }
 //        getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
@@ -129,13 +146,22 @@ public class HomeActivity extends MyBaseActivity {
 //
 //    }
 //
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.home, menu);
-//        return true;
-//    }
-//
+
+    @Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        if (toolbarMenu != 0) {
+            menu.clear();
+            getMenuInflater().inflate(toolbarMenu, menu);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    //
 //
 //    @Override
 //    public boolean onSupportNavigateUp() {
@@ -144,25 +170,205 @@ public class HomeActivity extends MyBaseActivity {
 //                || super.onSupportNavigateUp();
 //    }
 
-    public void checkPermission(Context context){
+    public void checkPermission(Context context) {
+        Collection<String> perms=new ArrayList<>();
+//        perms.add(Manifest.permission.ACCESS_FINE_LOCATION);
+//        perms.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+//        startPermission(context);
+//        perms.add(Manifest.permission.BLUETOOTH);
+//        perms.add(Manifest.permission.BLUETOOTH_ADMIN);
+
+
+
+
+
+    }
+
+    public void accessFineLocationPermission(Context context){
         Dexter.withContext(context)
-                .withPermissions(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION
-                )
+                .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                        startPermission2(context);
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+                        showMessage.showMessageAlert("لطفا لوکیشن دستگاه را روشن کنید", ShowMessage.ALERT_ERROR);
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+
+                    }
+                }).withErrorListener(new PermissionRequestErrorListener() {
+            @Override
+            public void onError(DexterError dexterError) {
+                Toast.makeText(context,dexterError.toString(),Toast.LENGTH_LONG).show();
+            }
+        }).check();
+    }
+
+    public void startPermission2(Context context){
+        Dexter.withContext(context)
+                .withPermissions(Manifest.permission.BLUETOOTH,Manifest.permission.BLUETOOTH_ADMIN)
                 .withListener(new MultiplePermissionsListener() {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
-                        if(multiplePermissionsReport.areAllPermissionsGranted()){
-                            homeActivityViewModelMy.getHasBluetoothPermission().postValue(true);
-                        }else{
-                            homeActivityViewModelMy.getHasBluetoothPermission().postValue(false);
-                            showMessage.showMessageAlert("بدون اجازه دسترسی به بلوتوث امکان استفاده از برنامه وجود ندارد",ShowMessage.ALERT_ERROR);
+                        if (multiplePermissionsReport.areAllPermissionsGranted()) {
+                            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.S){
+//                                startPermission3(context);
+                            }
+                        } else {
+                            showMessage.showMessageAlert("بدون اجازه دسترسی به بلوتوث امکان استفاده از برنامه وجود ندارد", ShowMessage.ALERT_ERROR);
                         }
                     }
 
                     @Override
                     public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
+                        permissionToken.continuePermissionRequest();
+                        Toast.makeText(context, "LEELE", Toast.LENGTH_LONG).show();
                     }
                 }).check();
     }
 
+    public void checkBluetoothConnectPermission(Context context){
+        Dexter.withContext(context)
+                .withPermission(Manifest.permission.BLUETOOTH_CONNECT)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+//                        startPermission4(context);
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+                        showMessage.showMessageAlert("دسترسی اتصال از طریق بلوتوث را ندارید", ShowMessage.ALERT_ERROR);
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+
+                    }
+                }).check();
+    }
+
+    public void checkBluetoothScanPermission(Context context){
+        Dexter.withContext(context)
+                .withPermission(Manifest.permission.BLUETOOTH_SCAN)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.Q){
+//                            startPermission5(context);
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+                        HomeActivity.this.showMessage.showMessageAlert("دسترسی لازم برای اسکن بلوتوث داده نشده است.",ShowMessage.ALERT_ERROR);
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+
+                    }
+                }).check();
+    }
+
+    public void checkLocationPermission(Context context){
+        Dexter.withContext(context)
+                .withPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+                        showMessage.showMessageAlert("عدم دسترسی لوکیشن باعث اختلال در کارکرد برنامه می شود",ShowMessage.ALERT_ERROR);
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+
+                    }
+                }).check();
+    }
+
+    private void networkStatePermission(Context context){
+        Dexter.withContext(context)
+                .withPermission(Manifest.permission.ACCESS_NETWORK_STATE)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                        isVPNTurnOn();
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+
+                    }
+                })
+                .withErrorListener(new PermissionRequestErrorListener() {
+                    @Override
+                    public void onError(DexterError dexterError) {
+                        Log.e("btk",dexterError.toString());
+                    }
+                }).check();
+    }
+
+    public void internetPermission(Context context){
+        Dexter.withContext(context)
+                .withPermission(Manifest.permission.INTERNET)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                        isVPNTurnOn();
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+
+                    }
+                })
+                .withErrorListener(new PermissionRequestErrorListener() {
+                    @Override
+                    public void onError(DexterError dexterError) {
+                        Log.e("btk",dexterError.toString());
+                    }
+                }).check();
+    }
+
+    public boolean isVPNTurnOn(){
+        String requiredPermission = android.Manifest.permission.ACCESS_NETWORK_STATE;
+        int checkVal = HomeActivity.this.checkCallingOrSelfPermission(requiredPermission);
+        if(checkVal != PackageManager.PERMISSION_GRANTED){
+            Log.i("BTK","NETWORK PERMMMMM!!!!!!!!");
+            networkStatePermission(HomeActivity.this);
+            return false;
+        }
+        try{
+            ConnectivityManager connectivityManager= (ConnectivityManager) HomeActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+            Network activeNetwork = connectivityManager.getActiveNetwork();
+            NetworkCapabilities caps = connectivityManager.getNetworkCapabilities(activeNetwork);
+            boolean vpnInUse = caps.hasTransport(NetworkCapabilities.TRANSPORT_VPN);
+            return vpnInUse;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

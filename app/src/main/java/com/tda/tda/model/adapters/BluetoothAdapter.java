@@ -33,19 +33,31 @@ public class BluetoothAdapter extends RecyclerView.Adapter<BluetoothAdapter.myVi
     @Override
     public void onBindViewHolder(@NonNull myViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         final BluetoothDevice myListData = differ.getCurrentList().get(position);
-        holder.txtName.setText(myListData.getName());
+        if(myListData.getName()!=null) {
+            holder.txtName.setText(myListData.getName().length() > 20 ? myListData.getName().substring(0, 19) : myListData.getName());
+        }else{
+            holder.txtName.setText("بدون نام");
+        }
         holder.txtIp.setText(myListData.getIp());
-        if (selectedPosition == position) {
+        if (myListData.isSelected()) {
             holder.imgTick.setVisibility(View.VISIBLE);
         } else {
             holder.imgTick.setVisibility(View.GONE);
         }
+
         holder.itemView.setOnClickListener(view -> {
-            SelectedDevice = differ.getCurrentList().get(position);
-            int lastItem = selectedPosition;
-            if (lastItem != -1) notifyItemChanged(lastItem);
-            selectedPosition = position;
-            notifyItemChanged(selectedPosition);
+            for(int i = 0;i < differ.getCurrentList().size(); i++){
+                differ.getCurrentList().get(i).setSelected(false);
+                if(SelectedDevice.getIp()!=null){
+                    if(SelectedDevice.getIp().equals(differ.getCurrentList().get(i).getIp())){
+                        notifyItemChanged(i);
+                    }
+                }
+            }
+            differ.getCurrentList().get(position).setSelected(true);
+            differ.submitList(differ.getCurrentList());
+            notifyItemChanged(position);
+            SelectedDevice=differ.getCurrentList().get(position);
         });
     }
 
@@ -58,7 +70,6 @@ public class BluetoothAdapter extends RecyclerView.Adapter<BluetoothAdapter.myVi
 
     class BluetoothDiffer extends DiffUtil.ItemCallback<BluetoothDevice> {
 
-
         @Override
         public boolean areItemsTheSame(@NonNull BluetoothDevice oldItem, @NonNull BluetoothDevice newItem) {
             return oldItem == newItem;
@@ -66,8 +77,9 @@ public class BluetoothAdapter extends RecyclerView.Adapter<BluetoothAdapter.myVi
 
         @Override
         public boolean areContentsTheSame(@NonNull BluetoothDevice oldItem, @NonNull BluetoothDevice newItem) {
-            return oldItem.getName().equals(newItem.getName()) && oldItem.getIp().equals(newItem.getIp());
+            return oldItem.getIp().equals(newItem.getIp());
         }
+
     }
 
     public class myViewHolder extends RecyclerView.ViewHolder {

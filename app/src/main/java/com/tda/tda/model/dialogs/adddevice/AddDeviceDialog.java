@@ -14,6 +14,7 @@ import com.tda.tda.HomeActivity;
 import com.tda.tda.R;
 import com.tda.tda.databinding.LayoutDialogAddDeviceBinding;
 import com.tda.tda.model.dialogs.ShowMessage;
+import com.tda.tda.model.listeners.AddDeviceListener;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -24,6 +25,8 @@ public class AddDeviceDialog extends DialogFragment {
     private LayoutDialogAddDeviceBinding binding;
     private String ip;
     private String bluetoothName;
+    private AddDeviceListener addDeviceListener;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -73,9 +76,11 @@ public class AddDeviceDialog extends DialogFragment {
     private void initResult(){
         viewModel.getResult().observe(getViewLifecycleOwner(),aBoolean -> {
             if(aBoolean){
-                ((HomeActivity)getActivity()).showMessage.showMessageAlert("دستگاه با موفقیت ثبت شد", ShowMessage.ALERT_SUCCESS);
+                ((HomeActivity)requireActivity()).showMessage.showMessageAlert("دستگاه با موفقیت ثبت شد", ShowMessage.ALERT_SUCCESS);
+                AddDeviceDialog.this.getDialog().dismiss();
+                if(this.addDeviceListener!=null){addDeviceListener.onDeviceAdd();}
             }else{
-                ((HomeActivity)getActivity()).showMessage.showMessageAlert("نام دستگاه یا آدرس تکراری است",ShowMessage.ALERT_ERROR);
+                ((HomeActivity)requireActivity()).showMessage.showMessageAlert("نام دستگاه یا آدرس تکراری است",ShowMessage.ALERT_ERROR);
             }
         });
     }
@@ -91,5 +96,9 @@ public class AddDeviceDialog extends DialogFragment {
     @Override
     public int getTheme() {
         return R.style.Theme_Dialog;
+    }
+
+    public void setAddDeviceListener(AddDeviceListener addDeviceListener) {
+        this.addDeviceListener = addDeviceListener;
     }
 }

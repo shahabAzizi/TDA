@@ -18,10 +18,10 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:titleTextAppearance="@style/ToolbarTextAppearance"
-            app:titleCentered="true"
+            android:layoutDirection="rtl"
             app:title="@string/device_toolbar_title"
-            />
+            app:titleCentered="true"
+            app:titleTextAppearance="@style/ToolbarTextAppearance" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -209,20 +209,20 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:src="@drawable/ic_empty"
-                    android:layout_centerInParent="true"
-                    android:layout_width="64dp"
                     android:id="@+id/device_empty_img"
-                    android:layout_height="64dp"/>
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_empty" />
 
                 <TextView
-                    android:textColor="@color/gray_light"
-                    android:textSize="8sp"
-                    android:text="@string/empty"
-                    android:layout_centerHorizontal="true"
-                    android:layout_below="@+id/device_empty_img"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/device_empty_img"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/empty"
+                    android:textColor="@color/gray_light"
+                    android:textSize="8sp" />
 
             </RelativeLayout>
 

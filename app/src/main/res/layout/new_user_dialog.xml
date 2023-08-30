@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    android:padding="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".model.dialogs.newuser.NewUserDialog">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/new_user_name"
+            android:textSize="12sp"
+            android:hint="@string/new_user_name_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <ImageButton
+            android:id="@+id/new_user_refresh"
+            android:scaleType="fitXY"
+            android:layout_gravity="center"
+            android:src="@drawable/baseline_repeat_24"
+            android:layout_width="48dp"
+            android:layout_height="48dp"/>
+
+        <LinearLayout
+            android:padding="10dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.github.ybq.android.spinkit.SpinKitView
+                android:id="@+id/new_user_spin_kit_step_zero"
+                style="@style/SpinKitView.Small.MultiplePulse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="visible"
+                app:SpinKit_Color="@color/gray_light" />
+
+            <TextView
+                android:id="@+id/new_user_step_zero"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/new_user_step_zero"
+                android:textColor="@color/gray_light"
+                android:textSize="10sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:padding="10dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.github.ybq.android.spinkit.SpinKitView
+                android:id="@+id/new_user_spin_kit_step_one"
+                style="@style/SpinKitView.Small.MultiplePulse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="visible"
+                app:SpinKit_Color="@color/gray_light" />
+
+            <TextView
+                android:id="@+id/new_user_step_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/new_user_step_one"
+                android:textColor="@color/gray_light"
+                android:textSize="10sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:padding="10dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.github.ybq.android.spinkit.SpinKitView
+                android:id="@+id/new_user_spin_kit_step_two"
+                style="@style/SpinKitView.Small.MultiplePulse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="visible"
+                app:SpinKit_Color="@color/gray_light" />
+
+            <TextView
+                android:id="@+id/new_user_step_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/new_user_step_two"
+                android:textColor="@color/gray_light"
+                android:textSize="10sp"/>
+
+        </LinearLayout>
+        <Button
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/padding_loading_box"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/new_user_add"
+            android:enabled="false"
+            android:textColor="@android:color/white"
+            android:drawableLeft="@drawable/ic_plus"
+            android:text="@string/user_btn_add"
+            android:background="@drawable/style_btn_connection_fail"
+            tools:ignore="MissingConstraints"
+            />
+    </LinearLayout>
+
+
+
+</RelativeLayout>

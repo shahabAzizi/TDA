@@ -16,6 +16,10 @@ import java.io.Serializable;
         }
 )
 public class DeviceDetails implements Serializable {
+
+    public final static String TYPE_USER_NORMAL="کاربر عادی";
+    public final static String TYPE_USER_ADMIN="مدیر";
+
     @PrimaryKey(autoGenerate = true)
     public int id;
 

@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.tda.tda.HomeActivity;
 import com.tda.tda.MyBaseFragment;
 import com.tda.tda.R;
 import com.tda.tda.databinding.SplashFragmentBinding;
@@ -31,7 +32,10 @@ public class SplashFragment extends MyBaseFragment {
                              @Nullable Bundle savedInstanceState) {
         binding=SplashFragmentBinding.inflate(inflater,container,false);
         mViewModel=new ViewModelProvider(this).get(SplashViewModelMy.class);
-
+        new Thread(() -> {
+                mViewModel.checkUser();
+        }).start();
+        ((HomeActivity) requireActivity()).toolbarMenu = 0;
         new Handler().postDelayed(runAfterSeconds,2000);
         return binding.getRoot();
     }
